@@ -41,14 +41,38 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            ElevatedButton(onPressed: () {}, child: Text("ログインする")),
-            ElevatedButton(onPressed: () {}, child: Text("新規登録をする")),
+            ElevatedButton(
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(title: Text("ログインしました"));
+                  },
+                );
+              },
+              child: Text("ログインする"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(title: Text("新規登録しました"));
+                  },
+                );
+              },
+              child: Text("新規登録をする"),
+            ),
             TextButton(
-              onPressed: () {},
-              child: Text(
-                "パスワードを忘れた方はこちら",
-                style: TextStyle(color: Colors.grey),
-              ),
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(title: Text("パスワードを変更しました"));
+                  },
+                );
+              },
+              child: Text("パスワードを忘れた方はこちら"),
             ),
           ],
         ),
