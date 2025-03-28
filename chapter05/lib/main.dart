@@ -29,13 +29,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+  double _height = 0.0;
+  double _weight = 0.0;
+  double _bmi = 0.0;
 
   @override
   Widget build(BuildContext context) {
@@ -45,22 +41,43 @@ class _MyHomePageState extends State<MyHomePage> {
 
         title: Text(widget.title),
       ),
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text("身長(cm)"),
+            TextField(
+              onChanged: (value) {
+                _height = (double.tryParse(value) ?? 0) / 100.0;
+              },
             ),
+            SizedBox(height: 16),
+            Text("体重(kg)"),
+            TextField(
+              onChanged: (value) {
+                _weight = (double.tryParse(value) ?? 0);
+              },
+            ),
+            SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () {
+                if (_height <= 0 || _weight <= 0) {
+                  setState(() {
+                    _bmi = 0;
+                  });
+                  return;
+                }
+                setState(() {
+                  _bmi = _weight / (_height * _height);
+                });
+              },
+              child: Text("計算する"),
+            ),
+            SizedBox(height: 16),
+            Text("BMIは ${_bmi} です。"),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }
