@@ -32,6 +32,27 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  List<Item> items = [];
+  final TextEditingController textEditingController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    watch();
+  }
+
+  // データ更新を監視
+  Future<void> watch() async {}
+
+  // 保存する
+  Future<void> save() async {}
+
+  // 完了・未完了に変更する
+  Future<void> complete() async {}
+
+  // 削除する
+  Future<void> delete() async {}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold();
