@@ -55,7 +55,29 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      appBar: AppBar(title: Text('TODO')),
+      body: ListView.builder(
+        itemBuilder: (context, index) {
+          if (index == 0) {
+            return ListTile(
+              title: TextField(controller: textEditingController),
+              trailing: ElevatedButton(
+                onPressed: () {
+                  save();
+                },
+                child: Text('保存'),
+              ),
+            );
+          }
+          final item = items[index-1];
+          return ListTile(
+            title: Text(item.text),
+          );
+        },
+        itemCount: items.length + 1,
+      ),
+    );
   }
 }
 
