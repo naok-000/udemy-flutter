@@ -38,4 +38,13 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
+class Item {
+  const Item({required this.id, required this.text});
 
+  final String id;
+  final String text;
+
+  factory Item.fromSnapshot(String id, Map<String, dynamic> document) {
+    return Item(id: id, text: document['text'].toString() ?? '');
+  }
+}
