@@ -1,0 +1,32 @@
+{
+    "coord": { "lon": 140.1167, "lat": 39.7167 },
+    "weather": [
+        { "id": 801, "main": "Clouds", "description": "薄い雲", "icon": "02d" }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 5.52,
+        "feels_like": 1.92,
+        "temp_min": 5.52,
+        "temp_max": 5.52,
+        "pressure": 1029,
+        "humidity": 36,
+        "sea_level": 1029,
+        "grnd_level": 1023
+    },
+    "visibility": 10000,
+    "wind": { "speed": 5.14, "deg": 290 },
+    "clouds": { "all": 20 },
+    "dt": 1743402619,
+    "sys": {
+        "type": 1,
+        "id": 8048,
+        "country": "JP",
+        "sunrise": 1743366344,
+        "sunset": 1743411693
+    },
+    "timezone": 32400,
+    "id": 2113126,
+    "name": "秋田市",
+    "cod": 200
+}
