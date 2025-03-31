@@ -10,9 +10,7 @@ import 'firebase_options.dart';
 Future<void> main() async {
   // Firebase関連の処理
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
@@ -40,7 +38,7 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-const collectionKey = 'my_todo';
+const collectionKey = 'my_flutter_todo';
 
 class _MyHomePageState extends State<MyHomePage> {
   List<Item> items = [];
@@ -55,7 +53,17 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   // データ更新を監視
-  Future<void> watch() async {}
+  Future<void> watch() async {
+    firestore.collection(collectionKey).snapshots().listen((event) {
+      // listenでコレクションの更新があるかを見る
+      // 変更があったらUIに知らせる
+      setState(() {
+        items = event.docs.reversed
+            .map((document) => Item.fromSnapshot(document.id, document.data()))
+            .toList(growable: false);
+      });
+    });
+  }
 
   // 保存する
   Future<void> save() async {}
