@@ -40,13 +40,17 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
+const collectionKey = 'my_todo';
+
 class _MyHomePageState extends State<MyHomePage> {
   List<Item> items = [];
   final TextEditingController textEditingController = TextEditingController();
+  late FirebaseFirestore firestore;
 
   @override
   void initState() {
     super.initState();
+    firestore = FirebaseFirestore.instance;
     watch();
   }
 
