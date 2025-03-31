@@ -1,0 +1,1 @@
+C:\Users\nao_m\StudioProjects\udemy-flutter\chapter07_stopwatch\build\app\intermediates\cxx\Debug\13c314p2\obj\x86_64
