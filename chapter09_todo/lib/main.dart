@@ -3,7 +3,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
-void main() {
+// void main() {
+//   runApp(const MyApp());
+// }
+
+Future<void> main() async {
+  // Firebase関連の処理
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -70,10 +79,8 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             );
           }
-          final item = items[index-1];
-          return ListTile(
-            title: Text(item.text),
-          );
+          final item = items[index - 1];
+          return ListTile(title: Text(item.text));
         },
         itemCount: items.length + 1,
       ),
