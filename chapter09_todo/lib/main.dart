@@ -66,7 +66,15 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   // 保存する
-  Future<void> save() async {}
+  Future<void> save() async {
+    final collection = firestore.collection(collectionKey);
+    final now = DateTime.now();
+    await collection.doc(now.millisecondsSinceEpoch.toString()).set({
+      "date": now,
+      "text": textEditingController.text,
+    });
+    textEditingController.text = '';
+  }
 
   // 完了・未完了に変更する
   Future<void> complete() async {}
