@@ -77,10 +77,18 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   // 完了・未完了に変更する
-  Future<void> complete() async {}
+  Future<void> complete(Item item) async {
+    final collection = firestore.collection(collectionKey);
+    await collection.doc(item.id).set({
+      'completed': !item.completed,
+    }, SetOptions(merge: true));
+  }
 
   // 削除する
-  Future<void> delete() async {}
+  Future<void> delete(String id) async {
+    final collection = firestore.collection(collectionKey);
+    await collection.doc(id).delete();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +108,23 @@ class _MyHomePageState extends State<MyHomePage> {
             );
           }
           final item = items[index - 1];
-          return ListTile(title: Text(item.text));
+          return Dismissible(
+            key: Key(item.id),
+            onDismissed: (direction) {
+              delete(item.id);
+            },
+            child: ListTile(
+              leading: Icon(
+                item.completed
+                    ? Icons.check_box
+                    : Icons.check_box_outline_blank,
+              ),
+              onTap: () {
+                complete(item);
+              },
+              title: Text(item.text),
+            ),
+          );
         },
         itemCount: items.length + 1,
       ),
@@ -109,12 +133,17 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class Item {
-  const Item({required this.id, required this.text});
+  const Item({required this.id, required this.text, required this.completed});
 
   final String id;
   final String text;
+  final bool completed;
 
   factory Item.fromSnapshot(String id, Map<String, dynamic> document) {
-    return Item(id: id, text: document['text'].toString() ?? '');
+    return Item(
+      id: id,
+      text: document['text'].toString() ?? '',
+      completed: document['completed'] ?? false,
+    );
   }
 }
