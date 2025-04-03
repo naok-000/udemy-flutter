@@ -172,7 +172,7 @@ class _ChatPageState extends State<ChatPage> {
               itemBuilder: (context, index) {
                 final item = items[index];
                 return ListTile(
-                  subtitle: Text(item.name),
+                  subtitle: Text('${item.name} ${item.date.toString().replaceAll('-', '/').substring(0, 16)}'),
                   title: Text(item.text),
                 );
               },
@@ -197,17 +197,19 @@ class _ChatPageState extends State<ChatPage> {
 }
 
 class Item {
-  const Item({required this.id, required this.name, required this.text});
+  const Item({required this.id, required this.name, required this.text, required this.date});
 
   final String id;
   final String name;
   final String text;
+  final DateTime date;
 
   factory Item.fromSnapshot(String id, Map<String, dynamic> document) {
     return Item(
       id: id,
       name: document['name'].toString() ?? '',
       text: document['text'].toString() ?? '',
+      date: (document['date'] as Timestamp?)?.toDate() ?? DateTime.now()
     );
   }
 }
