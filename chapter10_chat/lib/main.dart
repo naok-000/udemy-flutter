@@ -171,9 +171,22 @@ class _ChatPageState extends State<ChatPage> {
               reverse: true,
               itemBuilder: (context, index) {
                 final item = items[index];
-                return ListTile(
-                  subtitle: Text('${item.name} ${item.date.toString().replaceAll('-', '/').substring(0, 16)}'),
-                  title: Text(item.text),
+                final isMe = item.name == widget.name;
+                return Padding(
+                  padding:
+                      isMe
+                          ? const EdgeInsets.only(left: 80, right: 16, top: 16)
+                          : EdgeInsets.only(left: 16, right: 80, top: 16),
+                  child: ListTile(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8)
+                    ),
+                    tileColor: isMe ? Colors.tealAccent : Colors.black12,
+                    subtitle: Text(
+                      '${item.name} ${item.date.toString().replaceAll('-', '/').substring(0, 16)}',
+                    ),
+                    title: Text(item.text),
+                  ),
                 );
               },
               itemCount: items.length,
@@ -197,7 +210,12 @@ class _ChatPageState extends State<ChatPage> {
 }
 
 class Item {
-  const Item({required this.id, required this.name, required this.text, required this.date});
+  const Item({
+    required this.id,
+    required this.name,
+    required this.text,
+    required this.date,
+  });
 
   final String id;
   final String name;
@@ -209,7 +227,7 @@ class Item {
       id: id,
       name: document['name'].toString() ?? '',
       text: document['text'].toString() ?? '',
-      date: (document['date'] as Timestamp?)?.toDate() ?? DateTime.now()
+      date: (document['date'] as Timestamp?)?.toDate() ?? DateTime.now(),
     );
   }
 }
