@@ -123,6 +123,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 complete(item);
               },
               title: Text(item.text),
+              subtitle: Text(
+                item.date.toString().replaceAll('-', '/').substring(0,19),
+              ),
             ),
           );
         },
@@ -133,17 +136,26 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class Item {
-  const Item({required this.id, required this.text, required this.completed});
+  const Item({
+    required this.id,
+    required this.text,
+    required this.completed,
+    required this.date,
+  });
 
   final String id;
   final String text;
   final bool completed;
+  final DateTime date;
 
   factory Item.fromSnapshot(String id, Map<String, dynamic> document) {
     return Item(
       id: id,
       text: document['text'].toString() ?? '',
       completed: document['completed'] ?? false,
+      date:
+          (document['date'] as Timestamp?)?.toDate() ??
+          DateTime.now(), // マップから'date'キーを取得、nullだったら現在の日時を使用
     );
   }
 }
